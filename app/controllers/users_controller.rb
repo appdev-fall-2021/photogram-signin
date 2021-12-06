@@ -1,5 +1,63 @@
 class UsersController < ApplicationController
 
+  def authenticate
+    #get the username from params
+    #get the password from params
+
+    #look up the record from the db matching username
+    #if there is no record, redirect back to sign in form
+
+    #if there is a record, check to see if password matches
+    #if not, redirect back to sign in form
+
+    #if so, set the cookie
+    #redirect to homepage
+    
+    #BELOW
+    #get the username from params
+    un = params.fetch("input_username")
+    #get the password from params
+    pw = params.fetch("input_password")
+
+    #look up the record from the db matching username
+    user = User.where({ :username => un }).at(0)
+    #if there is no record, redirect back to sign in form
+    if user == nil
+      redirect_to("/user_sign_in", { :alert => "No one by that name 'round these parts"})
+    
+    else 
+      #if there is a record, check to see if password matches
+      if user.authenticate(pw)
+        #if so, set the cookie
+        session.store(:user_id, user.id)
+
+        redirect_to("/", { :notice => "Welcome back, " + user.username + "!"})
+
+      else
+        #if not, redirect back to sign in form
+        redirect_to("/user_sign_in", { :alert => "Nice try, sucker!"})  
+
+     
+      end
+      
+    end  
+   
+
+  end
+
+  def new_session_form
+    render({ :template => "users/signin_form.html.erb"})
+    
+  end
+  
+  
+  def toast_cookies
+    reset_session
+
+    redirect_to("/", { :notice => "See ya later!" })
+  end
+
+
   def new_registration_form
     render({ :template => "users/signup_form.html.erb"})
     
@@ -29,6 +87,8 @@ class UsersController < ApplicationController
     save_status = user.save
 
     if save_status == true
+      session.store(:user_id, user.id)
+
      redirect_to("/users/#{user.username}", { :notice => "Welcome, " + user.username + "!" })
     else 
       redirect_to("/user_sign_up", { :alert => user.errors.full_messages.to_sentence})
