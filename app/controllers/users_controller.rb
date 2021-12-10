@@ -1,5 +1,10 @@
 class UsersController < ApplicationController
 
+  def homepage
+    render({ :template => "photos/home.html.erb"})   
+  end
+
+
   def authenticate
     #get the username from params
     #get the password from params
