@@ -1,17 +1,17 @@
-<h1>Photo Details</h1>
+<h1>Item Details</h1>
 
 <dl>
-  <dt>Image</dt>
+  <dt>Item image</dt>
   <dd>
     <img src="<%= @photo.image %>">
   </dd>
 
-  <dt>Caption</dt>
+  <dt>Description</dt>
   <dd>
     <p><%= @photo.caption %></p>
   </dd>
 
-  <dt>Owner</dt>
+  <dt>Seller</dt>
   <dd>
     <%= @photo.poster.username %>
   </dd>
@@ -21,33 +21,14 @@
     2 months ago
   </dd>
 
-  <dt>Edit photo</dt>
-  <dd>
-    <form action="/update_photo/<%= @photo.id %>">
-      <label for="browser_image">Image</label>
-      <input id="browser_image" type="text" name="input_image" placeholder="Enter a URL for the image..." value="<%= @photo.image %>">
-
-      <label for="browser_caption">Caption</label>
-      <textarea id="browser_caption" name="input_caption" placeholder="Enter a caption for the photo..."><%= @photo.caption %></textarea>
-
-      <button>Update photo</button>
-    </form>
-  </dd>
-
-  <dt>Delete photo</dt>
-  <dd>
-    <a href="/delete_photo/<%= @photo.id %>;">
-      Delete this photo
-    </a>
-  </dd>
 </dl>
 
-<h2>Comments</h2>
+<h2>Who's interested?</h2>
 
 <table>
   <tr>
-    <th>Commenter</th>
-    <th>Comment</th>
+    <th>Buyer</th>
+    <th>Phone number here</th>
     <th>Posted</th>
   </tr>
 
@@ -69,13 +50,13 @@
   <% end %>
 </table>
 
-<h3>Add a new comment</h3>
+<h3>Interested? Share your phone number here:</h3>
 
 <form action="/insert_comment_record" method="post">
   <input id="browser_photo_id" type="hidden" value="<%= @photo.id %>" name="input_photo_id">
 
-  <label for="browser_comment">Comment</label>
-  <textarea id="browser_comment" name="input_body" placeholder="Enter a comment..."></textarea>
+  <label for="browser_comment">Phone number</label>
+  <textarea id="browser_comment" name="input_body" placeholder="Enter your phone number..."></textarea>
 
-  <button>Add comment</button>
+  <button>Submit number!</button>
 </form>
